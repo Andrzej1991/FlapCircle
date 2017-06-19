@@ -15,6 +15,8 @@ public class GameConfig {
     public static final float FLY_ACC = 0.3f;
     public static final float DIVE_ACC = 0.5f;
     public static final float GAP_BETWEEN_FLOWERS = 8f;
+    public static final float HUD_WIDTH = 600f;
+    public static final float HUD_HEOGHT = 800f;
 
     private GameConfig() {
     }

@@ -16,6 +16,10 @@ public class ScoreController {
         score++;
     }
 
+    public String getScoreString(){
+        return Integer.toString(score);
+    }
+
     public void reset(){
         score = 0;
     }
