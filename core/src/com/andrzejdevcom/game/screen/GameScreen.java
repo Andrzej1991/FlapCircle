@@ -1,5 +1,7 @@
 package com.andrzejdevcom.game.screen;
 
+import com.andrzejdevcom.game.SkippyFlowersGame;
+import com.andrzejdevcom.game.common.ScoreController;
 import com.andrzejdevcom.game.config.GameConfig;
 import com.andrzejdevcom.game.entity.Flower;
 import com.andrzejdevcom.game.entity.Skippy;
@@ -21,14 +23,21 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
 
+    private final SkippyFlowersGame game;
+    private final ScoreController scoreController;
+
     private OrthographicCamera camera;
     private Viewport viewport;
     private ShapeRenderer rendered;
 
     private Skippy skippe;
     private Array<Flower> flowers = new Array<Flower>();
+    private float skippyStartX;
+    private float skippyStartY;
 
-    public GameScreen() {
+    public GameScreen(SkippyFlowersGame game) {
+        this.game = game;
+        scoreController = game.getScoreController();
     }
 
     @Override
@@ -36,9 +45,10 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         rendered = new ShapeRenderer();
-
+        skippyStartX = GameConfig.WORLD_WIDTH / 4f;
+        skippyStartY = GameConfig.WORLD_HEIGHT / 2f;
         skippe = new Skippy();
-        skippe.setPosition(GameConfig.WORLD_WIDTH / 4f, GameConfig.WORLD_HEIGHT / 2);
+        skippe.setPosition(skippyStartX, skippyStartY);
         createNewFlower();
     }
 
@@ -82,12 +92,27 @@ public class GameScreen implements Screen {
             skippe.flyUp();
         }
         blockSkippyFromLeavingTheWorld();
-
         for (Flower flower : flowers) {
             flower.update(delta);
         }
         spawnFlower();
         removePassedFlowers();
+        checkCollision();
+        updateScore();
+    }
+
+    private void checkCollision() {
+        for (Flower flower : flowers) {
+            if (flower.isSkippyColliding(skippe)) {
+                restart();
+            }
+        }
+    }
+
+    private void restart() {
+        skippe.setPosition(skippyStartX, skippyStartY);
+        flowers.clear();
+        scoreController.reset();
     }
 
     private void removePassedFlowers() {
@@ -101,7 +126,7 @@ public class GameScreen implements Screen {
 
     private void createNewFlower() {
         Flower flower = new Flower();
-        flower.setX(GameConfig.WORLD_WIDTH - Flower.WIDTH);
+        flower.setX(GameConfig.WORLD_WIDTH + Flower.WIDTH);
         flowers.add(flower);
     }
 
@@ -110,7 +135,9 @@ public class GameScreen implements Screen {
             createNewFlower();
         } else {
             Flower lastFlower = flowers.peek();
-            if (lastFlower.getX() < GameConfig.WORLD_WIDTH - GameConfig.GAP_BETWEEN_FLOWERS) ;
+            if (lastFlower.getX() < GameConfig.WORLD_WIDTH - GameConfig.GAP_BETWEEN_FLOWERS) {
+                createNewFlower();
+            }
         }
     }
 
@@ -126,16 +153,37 @@ public class GameScreen implements Screen {
         rendered.end();
     }
 
+    private void updateScore() {
+        if (flowers.size > 0) {
+            Flower flower = flowers.first();
+            if (!flower.isScoreCollected() && flower.isSkippyCollidingWithSensor(skippe)) {
+                flower.collectScore();
+                scoreController.incrementScore();
+            }
+        }
+    }
+
     private void drawDebug() {
         Circle skippyCollisionsCircle = skippe.getCollistionCircle();
         rendered.circle(skippyCollisionsCircle.x, skippyCollisionsCircle.y,
                 skippyCollisionsCircle.radius, 30);
         for (Flower flower : flowers) {
-            Circle flowerCollisionCircle = flower.getCollistionCircle();
-            Rectangle flowerCollisionRectangle = flower.getCollisionRect();
-            rendered.circle(flowerCollisionCircle.x, flowerCollisionCircle.y, flowerCollisionCircle.radius, 30);
-            rendered.rect(flowerCollisionRectangle.x, flowerCollisionRectangle.y,
-                    flowerCollisionRectangle.width, flowerCollisionRectangle.height);
+            Circle bottomflowerCollisionCircle = flower.getBottomcollistionCircle();
+            Rectangle bottomCollisionRectangle = flower.getBottomCollisionRect();
+            rendered.circle(bottomflowerCollisionCircle.x, bottomflowerCollisionCircle.y,
+                    bottomflowerCollisionCircle.radius, 30);
+            rendered.rect(bottomCollisionRectangle.x, bottomCollisionRectangle.y,
+                    bottomCollisionRectangle.width, bottomCollisionRectangle.height);
+
+            Circle topFlowersCollisionCircle = flower.getTopCollistionCircle();
+            Rectangle topCollisionRectanlge = flower.getTopCollisionRect();
+            rendered.circle(topFlowersCollisionCircle.x, topFlowersCollisionCircle.y,
+                    topFlowersCollisionCircle.radius, 30);
+            rendered.rect(topCollisionRectanlge.x, topCollisionRectanlge.y,
+                    topCollisionRectanlge.width, topCollisionRectanlge.height);
+
+            Rectangle sensorRectangle = flower.getSensorRectangle();
+            rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height);
         }
     }
 }
