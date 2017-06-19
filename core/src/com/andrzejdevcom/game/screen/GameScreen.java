@@ -113,7 +113,7 @@ public class GameScreen implements Screen {
     private void drawHud() {
         String scoreString = scoreController.getScoreString();
         glyph.setText(font, scoreString);
-        float scoreX = (GameConfig.HUD_HEOGHT - glyph.width) /2f;
+        float scoreX = (GameConfig.HUD_WIDTH - glyph.width) /2f;
         float scoreY = 4 * GameConfig.HUD_HEOGHT / 5 - glyph.height / 2;
         font.draw(batch, scoreString, scoreX, scoreY);
     }

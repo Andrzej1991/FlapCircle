@@ -8,6 +8,8 @@ public class AssetPaths {
 
     public static final String SCORE_FONT = "fonts/score.fnt";
 
+    public static final String GAME_PLAY = "gameplay/gameplay.atlas";
+
     private AssetPaths(){
 
     }
