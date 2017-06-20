@@ -41,7 +41,7 @@ class GameScreen implements Screen {
     private float skippyStartX;
     private float skippyStartY;
     private boolean changeScreen;
-    private Sound hit,jump,score;
+    private Sound hit, jump, score;
 
 
     GameScreen(SkippyFlowersGame game) {
@@ -154,6 +154,7 @@ class GameScreen implements Screen {
     private void restart() {
         skippe.setPosition(skippyStartX, skippyStartY);
         flowers.clear();
+        game.playServices.submitScore(scoreController.getScore());
         scoreController.reset();
     }
 

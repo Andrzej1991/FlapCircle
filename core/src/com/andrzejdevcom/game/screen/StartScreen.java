@@ -50,13 +50,31 @@ public class StartScreen implements Screen {
         TextureRegion playRegion = atlas.findRegion(RegionNames.PLAY);
         ImageButton play = new ImageButton(new TextureRegionDrawable(playRegion));
         play.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 4f, Align.center);
-
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 play();
             }
         });
+        TextureRegion leaderboardRegion = atlas.findRegion(RegionNames.LEADERBOARD);
+        ImageButton leaderBoard = new ImageButton(new TextureRegionDrawable(leaderboardRegion));
+        leaderBoard.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 3f);
+        leaderBoard.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.playServices.showScore();
+            }
+        });
+
+        TextureRegion achievementRegion = atlas.findRegion(RegionNames.ACHIEVEMENT);
+        ImageButton achievementBoard = new ImageButton(new TextureRegionDrawable(achievementRegion));
+        achievementBoard.setPosition(GameConfig.HUD_WIDTH / 12f, GameConfig.HUD_HEOGHT / 3f);
+
+        stage.addActor(achievementBoard);
+
+        stage.addActor(leaderBoard);
+
+
         stage.addActor(play);
         Label.LabelStyle labeStyle = new Label.LabelStyle();
         labeStyle.font = assetManager.get(AssetDescriptors.SCORE_FONT);

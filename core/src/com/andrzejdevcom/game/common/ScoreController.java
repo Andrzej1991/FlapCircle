@@ -26,6 +26,10 @@ public class ScoreController {
         return Integer.toString(score);
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public String getHighScoreString(){
         return  Integer.toString(highScore);
     }

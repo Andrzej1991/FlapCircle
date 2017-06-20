@@ -19,7 +19,7 @@ public class SkippyFlowersGame extends Game {
     private AdHandler adHandler;
     boolean toggle;
 
-    private static PlayServices playServices;
+    public static PlayServices playServices;
 
     public SkippyFlowersGame(){
 
