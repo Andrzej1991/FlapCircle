@@ -16,6 +16,10 @@ public class RegionNames {
 
     public static final String SHARE = "share";
 
+    public static final String INFO = "information";
+
+    public static final String SETTINGS = "settings";
+
     private RegionNames() {
     }
 }

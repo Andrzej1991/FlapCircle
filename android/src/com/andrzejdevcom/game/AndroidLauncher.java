@@ -134,6 +134,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
                 @Override
                 public void run() {
                     gameHelper.beginUserInitiatedSignIn();
+
                 }
             });
         } catch (Exception e) {
