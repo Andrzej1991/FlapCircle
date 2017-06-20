@@ -9,6 +9,7 @@ import com.andrzejdevcom.game.entity.Skippy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,14 +20,9 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-/**
- * Created by Andrzej on 2017-06-14.
- */
-
-public class GameScreen implements Screen {
+class GameScreen implements Screen {
 
     private final SkippyFlowersGame game;
     private final ScoreController scoreController;
@@ -34,9 +30,9 @@ public class GameScreen implements Screen {
     private final AssetManager assetManager;
 
     private OrthographicCamera camera;
-    private Viewport viewport;
+    private StretchViewport viewport;
     private ShapeRenderer rendered;
-    private Viewport hudViewport;
+    private StretchViewport hudViewport;
     private BitmapFont font;
     private GlyphLayout glyph = new GlyphLayout();
 
@@ -44,8 +40,11 @@ public class GameScreen implements Screen {
     private Array<Flower> flowers = new Array<Flower>();
     private float skippyStartX;
     private float skippyStartY;
+    private boolean changeScreen;
+    private Sound hit,jump,score;
 
-    public GameScreen(SkippyFlowersGame game) {
+
+    GameScreen(SkippyFlowersGame game) {
         this.game = game;
         scoreController = game.getScoreController();
         batch = game.getBatch();
@@ -55,15 +54,19 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
-        hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        viewport = new StretchViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
+        hudViewport = new StretchViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
         rendered = new ShapeRenderer();
         font = assetManager.get(AssetDescriptors.SCORE_FONT);
         skippyStartX = GameConfig.WORLD_WIDTH / 4f;
         skippyStartY = GameConfig.WORLD_HEIGHT / 2f;
+        hit = assetManager.get(AssetDescriptors.HIT);
+        jump = assetManager.get(AssetDescriptors.JUMP);
+        score = assetManager.get(AssetDescriptors.SCORE);
         skippe = new Skippy();
         skippe.setPosition(skippyStartX, skippyStartY);
         createNewFlower();
+        restart();
     }
 
     @Override
@@ -73,8 +76,13 @@ public class GameScreen implements Screen {
         update(delta);
         hudViewport.apply();
         renderHud();
-        viewport.apply();
+//        viewport.apply();
         renderDebug();
+
+        if (changeScreen) {
+            scoreController.updateHighScore();
+            game.setScreen(new StartScreen(game));
+        }
     }
 
     @Override
@@ -113,7 +121,7 @@ public class GameScreen implements Screen {
     private void drawHud() {
         String scoreString = scoreController.getScoreString();
         glyph.setText(font, scoreString);
-        float scoreX = (GameConfig.HUD_WIDTH - glyph.width) /2f;
+        float scoreX = (GameConfig.HUD_WIDTH - glyph.width) / 2f;
         float scoreY = 4 * GameConfig.HUD_HEOGHT / 5 - glyph.height / 2;
         font.draw(batch, scoreString, scoreX, scoreY);
     }
@@ -121,6 +129,7 @@ public class GameScreen implements Screen {
     private void update(float delta) {
         skippe.update(delta);
         if (Gdx.input.justTouched()) {
+            jump.play();
             skippe.flyUp();
         }
         blockSkippyFromLeavingTheWorld();
@@ -136,7 +145,8 @@ public class GameScreen implements Screen {
     private void checkCollision() {
         for (Flower flower : flowers) {
             if (flower.isSkippyColliding(skippe)) {
-                restart();
+                hit.play();
+                changeScreen = true;
             }
         }
     }
@@ -189,6 +199,7 @@ public class GameScreen implements Screen {
         if (flowers.size > 0) {
             Flower flower = flowers.first();
             if (!flower.isScoreCollected() && flower.isSkippyCollidingWithSensor(skippe)) {
+                score.play();
                 flower.collectScore();
                 scoreController.incrementScore();
             }
@@ -215,7 +226,7 @@ public class GameScreen implements Screen {
                     topCollisionRectanlge.width, topCollisionRectanlge.height);
 
             Rectangle sensorRectangle = flower.getSensorRectangle();
-            rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height);
+            rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height, 0, 0, 0, 0, 0);
         }
     }
 }

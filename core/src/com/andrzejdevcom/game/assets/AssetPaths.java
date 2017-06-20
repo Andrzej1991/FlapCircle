@@ -1,14 +1,18 @@
 package com.andrzejdevcom.game.assets;
 
-/**
- * Created by Andrzej on 2017-06-19.
- */
-
 public class AssetPaths {
 
-    public static final String SCORE_FONT = "fonts/score.fnt";
+    static final String SCORE_FONT = "fonts/score.fnt";
 
-    public static final String GAME_PLAY = "gameplay/gameplay.atlas";
+    static final String GAME_PLAY = "gameplay/gameplay.atlas";
+
+    public static final String BG_MUSIC = "music_background.mp3";
+
+    static final String HIT = "hit.wav";
+
+    static final String JUMP = "jump.wav";
+
+    static final String SCORE = "score.wav";
 
     private AssetPaths(){
 

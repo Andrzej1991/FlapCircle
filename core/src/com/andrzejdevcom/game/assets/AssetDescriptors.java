@@ -1,12 +1,9 @@
 package com.andrzejdevcom.game.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
-/**
- * Created by Andrzej on 2017-06-19.
- */
 
 public class AssetDescriptors {
 
@@ -15,6 +12,15 @@ public class AssetDescriptors {
 
     public static final AssetDescriptor<TextureAtlas> GAME_PLAY =
             new AssetDescriptor<TextureAtlas>(AssetPaths.GAME_PLAY, TextureAtlas.class);
+
+    public static final AssetDescriptor<Sound> HIT =
+            new AssetDescriptor<Sound>(AssetPaths.HIT, Sound.class);
+
+    public static final AssetDescriptor<Sound> JUMP =
+            new AssetDescriptor<Sound>(AssetPaths.JUMP, Sound.class);
+
+    public static final AssetDescriptor<Sound> SCORE =
+            new AssetDescriptor<Sound>(AssetPaths.SCORE, Sound.class);
 
     private AssetDescriptors() {
 

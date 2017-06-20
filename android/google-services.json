@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "636701651863",
+    "firebase_url": "https://flappycircle-a5cb0.firebaseio.com",
+    "project_id": "flappycircle-a5cb0",
+    "storage_bucket": "flappycircle-a5cb0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636701651863:android:f43f4d34390cd56e",
+        "android_client_info": {
+          "package_name": "com.andrzejdevcom.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636701651863-8m76ctgeavfptrq60pvjmu6m0ie1vmub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEb-pUzsKUk5iq7cb23Mtek7FNNOo6OWk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
