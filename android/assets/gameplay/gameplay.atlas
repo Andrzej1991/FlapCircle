@@ -1,0 +1,55 @@
+
+gameplay.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+achievement
+  rotate: false
+  xy: 132, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+information
+  rotate: false
+  xy: 262, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+leaderboard
+  rotate: false
+  xy: 392, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 2, 2
+  size: 128, 132
+  orig: 128, 132
+  offset: 0, 0
+  index: -1
+rate
+  rotate: false
+  xy: 522, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 652, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+share
+  rotate: false
+  xy: 782, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
