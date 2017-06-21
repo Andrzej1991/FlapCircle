@@ -2,17 +2,21 @@ package com.andrzejdevcom.game;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.andrzejdevcom.game.common.ScoreController;
 import com.andrzejdevcom.game.interfaces.PlayServices;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -22,6 +26,11 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static com.badlogic.gdx.Gdx.app;
 
@@ -34,6 +43,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     protected static AdView adView;
     private GameHelper gameHelper;
     private final static int requestCode = 1;
+    private ScoreController scoreController;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    public static TextView textView;
+
+    private String value;
 
     static Handler handler = new Handler() {
         @Override
@@ -49,13 +64,28 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adView = new AdView(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useAccelerometer = true;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("message");
+        textView = new TextView(this);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                value = dataSnapshot.getValue(String.class);
+                textView.setText(getString(R.string.curretly_prize_pool) + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Tag DATABASEEE", databaseError.toString());
+
+            }
+        });
         RelativeLayout relativeLayout = new RelativeLayout(this);
         View gameView = initializeForView(new SkippyFlowersGame(this), cfg);
         relativeLayout.addView(gameView);
@@ -69,12 +99,19 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             }
         });
         adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId("ca-app-pub-2389435775598003/5244502571");
+        adView.setAdUnitId(AD_UNIT_ID);
         AdRequest.Builder builder = new AdRequest.Builder();
         RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         relativeLayout.addView(adView, adParams);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(Color.WHITE);
+        RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        textParams.setMargins(0, 200, 100, 0);
+        relativeLayout.addView(textView, textParams);
         adView.loadAd(builder.build());
+
         setContentView(relativeLayout);
         gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
         gameHelper.enableDebugLog(false);
@@ -88,6 +125,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             }
         };
         gameHelper.setup(gameHelperListener);
+        scoreController = new ScoreController();
     }
 
     @Override
@@ -158,7 +196,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
     @Override
     public void rateGame() {
-        String str = "Your PlayStore Link";
+        String str = "https://play.google.com/store/apps/details?id=com.company.andrzej.fastdraw";
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
     }
 
@@ -197,6 +235,26 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     @Override
     public boolean isSignedIn() {
         return gameHelper.isSignedIn();
+    }
+
+    @Override
+    public void hideText() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textView.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void showText() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

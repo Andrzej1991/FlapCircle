@@ -44,49 +44,55 @@ public class StartScreen implements Screen {
         stage = new Stage(viewport, game.getBatch());
         initUI();
         Gdx.input.setInputProcessor(stage);
+        SkippyFlowersGame.playServices.showText();
     }
 
     private void initTextureRegions() {
         TextureAtlas atlas = assetManager.get(AssetDescriptors.GAME_PLAY);
         TextureRegion playRegion = atlas.findRegion(RegionNames.PLAY);
         play = new ImageButton(new TextureRegionDrawable(playRegion));
-        play.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 3.5f, Align.center);
+        play.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 3f, Align.center);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 play();
+                SkippyFlowersGame.playServices.hideText();
             }
         });
-
         TextureRegion leaderboardRegion = atlas.findRegion(RegionNames.LEADERBOARD);
         leaderBoard = new ImageButton(new TextureRegionDrawable(leaderboardRegion));
-        leaderBoard.setPosition(GameConfig.HUD_WIDTH / 1.4f, GameConfig.HUD_HEOGHT / 2f, Align.left);
+        leaderBoard.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 2f, Align.center);
         leaderBoard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.playServices.showScore();
+                SkippyFlowersGame.playServices.showScore();
             }
         });
-
         TextureRegion achievementRegion = atlas.findRegion(RegionNames.ACHIEVEMENT);
         achievementBoard = new ImageButton(new TextureRegionDrawable(achievementRegion));
-        achievementBoard.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 2f, Align.right);
+        achievementBoard.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 2f, Align.center);
 
         TextureRegion infoRegion = atlas.findRegion(RegionNames.INFO);
         info = new ImageButton(new TextureRegionDrawable(infoRegion));
-        info.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 2f, Align.center);
+        info.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 2f, Align.center);
 
         TextureRegion settingsRegion = atlas.findRegion(RegionNames.SETTINGS);
         settings = new ImageButton(new TextureRegionDrawable(settingsRegion));
-        settings.setPosition(GameConfig.HUD_WIDTH - GameConfig.HUD_WIDTH / 3f, GameConfig.HUD_HEOGHT / 7f);
+        settings.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 12f, Align.center);
 
         TextureRegion shareRegion = atlas.findRegion(RegionNames.SHARE);
         share = new ImageButton(new TextureRegionDrawable(shareRegion));
-        share.setPosition(GameConfig.HUD_WIDTH - GameConfig.HUD_WIDTH / 3f, GameConfig.HUD_HEOGHT / 4.2f);
-
+        share.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 4.7f, Align.center);
         TextureRegion rateRegion = atlas.findRegion(RegionNames.RATE);
         rate = new ImageButton(new TextureRegionDrawable(rateRegion));
-        rate.setPosition(GameConfig.HUD_WIDTH / 14f, GameConfig.HUD_HEOGHT / 4.2f);
+        rate.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 4.7f, Align.center);
+        rate.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //TODO give link to shop when app is pushed
+                SkippyFlowersGame.playServices.rateGame();
+            }
+        });
 
     }
 
@@ -102,7 +108,7 @@ public class StartScreen implements Screen {
         Label.LabelStyle labeStyle = new Label.LabelStyle();
         labeStyle.font = assetManager.get(AssetDescriptors.SCORE_FONT);
         labeStyle.fontColor = Color.WHITE;
-        String scoreString = "Best: " + scoreController.getHighScoreString();
+        String scoreString = "Best score: " + scoreController.getHighScoreString();
         Label bestScore = new Label(scoreString, labeStyle);
         bestScore.setPosition(
                 GameConfig.HUD_WIDTH / 2f,

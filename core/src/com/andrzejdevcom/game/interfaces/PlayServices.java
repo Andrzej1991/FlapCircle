@@ -10,4 +10,6 @@ public interface PlayServices
     void showAchievement();
     void showScore();
     boolean isSignedIn();
+    void hideText();
+    void showText();
 }

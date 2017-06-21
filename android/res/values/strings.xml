@@ -3,5 +3,6 @@
 
     <string name="app_name">FlapCircle</string>
     <string name="exit">Exit</string>
+    <string name="curretly_prize_pool">Currently prize pool: </string>
 
 </resources>
