@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.andrzejdevcom.game.common.ScoreController;
 import com.andrzejdevcom.game.interfaces.PlayServices;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -43,14 +42,13 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     protected static AdView adView;
     private GameHelper gameHelper;
     private final static int requestCode = 1;
-    private ScoreController scoreController;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    public static TextView textView;
-
+    public TextView textView;
+//
     private String value;
 
-    static Handler handler = new Handler() {
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -125,7 +123,6 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             }
         };
         gameHelper.setup(gameHelperListener);
-        scoreController = new ScoreController();
     }
 
     @Override

@@ -67,6 +67,7 @@ class GameScreen implements Screen {
         skippe.setPosition(skippyStartX, skippyStartY);
         createNewFlower();
         restart();
+        game.playServices.hideText();
     }
 
     @Override
@@ -76,7 +77,6 @@ class GameScreen implements Screen {
         update(delta);
         hudViewport.apply();
         renderHud();
-//        viewport.apply();
         renderDebug();
 
         if (changeScreen) {
@@ -154,7 +154,7 @@ class GameScreen implements Screen {
     private void restart() {
         skippe.setPosition(skippyStartX, skippyStartY);
         flowers.clear();
-        game.playServices.submitScore(scoreController.getScore());
+        game.playServices.submitScore(Integer.parseInt(scoreController.getHighScoreString()));
         scoreController.reset();
     }
 

@@ -44,7 +44,7 @@ public class StartScreen implements Screen {
         stage = new Stage(viewport, game.getBatch());
         initUI();
         Gdx.input.setInputProcessor(stage);
-        SkippyFlowersGame.playServices.showText();
+        game.playServices.showText();
     }
 
     private void initTextureRegions() {
@@ -56,7 +56,7 @@ public class StartScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 play();
-                SkippyFlowersGame.playServices.hideText();
+//                game.playServices.hideText();
             }
         });
         TextureRegion leaderboardRegion = atlas.findRegion(RegionNames.LEADERBOARD);
@@ -65,7 +65,7 @@ public class StartScreen implements Screen {
         leaderBoard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SkippyFlowersGame.playServices.showScore();
+                game.playServices.showScore();
             }
         });
         TextureRegion achievementRegion = atlas.findRegion(RegionNames.ACHIEVEMENT);
@@ -75,6 +75,12 @@ public class StartScreen implements Screen {
         TextureRegion infoRegion = atlas.findRegion(RegionNames.INFO);
         info = new ImageButton(new TextureRegionDrawable(infoRegion));
         info.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 2f, Align.center);
+        info.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new HelpScreen(game));
+            }
+        });
 
         TextureRegion settingsRegion = atlas.findRegion(RegionNames.SETTINGS);
         settings = new ImageButton(new TextureRegionDrawable(settingsRegion));
@@ -90,7 +96,7 @@ public class StartScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //TODO give link to shop when app is pushed
-                SkippyFlowersGame.playServices.rateGame();
+                game.playServices.rateGame();
             }
         });
 
