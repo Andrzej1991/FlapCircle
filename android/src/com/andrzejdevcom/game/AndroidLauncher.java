@@ -45,7 +45,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     public TextView textView;
-//
+    //
     private String value;
 
     Handler handler = new Handler() {
@@ -75,7 +75,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 value = dataSnapshot.getValue(String.class);
-                textView.setText(getString(R.string.curretly_prize_pool) + value);
+                textView.setText(getString(R.string.curretly_prize_pool) + " " + value);
             }
 
             @Override
@@ -106,7 +106,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
         textView.setTextColor(Color.WHITE);
         RelativeLayout.LayoutParams textParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        textParams.setMargins(0, 200, 100, 0);
+        textParams.setMargins(0, 170, 100, 0);
         relativeLayout.addView(textView, textParams);
         adView.loadAd(builder.build());
 

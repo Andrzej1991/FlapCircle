@@ -78,9 +78,9 @@ class GameScreen implements Screen {
         hudViewport.apply();
         renderHud();
         renderDebug();
-
         if (changeScreen) {
             scoreController.updateHighScore();
+            game.playServices.submitScore(Integer.parseInt(scoreController.getHighScoreString()));
             game.setScreen(new StartScreen(game));
         }
     }
@@ -154,7 +154,6 @@ class GameScreen implements Screen {
     private void restart() {
         skippe.setPosition(skippyStartX, skippyStartY);
         flowers.clear();
-        game.playServices.submitScore(Integer.parseInt(scoreController.getHighScoreString()));
         scoreController.reset();
     }
 

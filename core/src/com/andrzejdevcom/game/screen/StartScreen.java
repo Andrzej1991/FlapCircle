@@ -56,7 +56,7 @@ public class StartScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 play();
-//                game.playServices.hideText();
+                game.playServices.hideText();
             }
         });
         TextureRegion leaderboardRegion = atlas.findRegion(RegionNames.LEADERBOARD);
@@ -118,7 +118,7 @@ public class StartScreen implements Screen {
         Label bestScore = new Label(scoreString, labeStyle);
         bestScore.setPosition(
                 GameConfig.HUD_WIDTH / 2f,
-                3 * GameConfig.HUD_HEOGHT / 4f,
+                3 * GameConfig.HUD_HEOGHT / 4.5f,
                 Align.center
         );
         stage.addActor(bestScore);
