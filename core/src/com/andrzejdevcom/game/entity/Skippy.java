@@ -3,10 +3,6 @@ package com.andrzejdevcom.game.entity;
 import com.andrzejdevcom.game.config.GameConfig;
 import com.badlogic.gdx.math.Circle;
 
-/**
- * Created by Andrzej on 2017-06-14.
- */
-
 public class Skippy {
 
     private final Circle collistionCircle;
@@ -21,6 +17,7 @@ public class Skippy {
     public Circle getCollistionCircle() {
         return collistionCircle;
     }
+
 
     public void update(float dt) {
         ySpeed -= GameConfig.DIVE_ACC * dt;

@@ -2,4 +2,12 @@
 <resources>
     <string name="app_id">636701651863</string>
     <string name="leaderboard_highest">CgkIl-eA88MSEAIQAQ</string>
+    <string name="achievement_first_game_login">CgkIl-eA88MSEAIQBw</string>
+    <string name="achievement_get_10_points">CgkIl-eA88MSEAIQCA</string>
+    <string name="achievement_20_points">CgkIl-eA88MSEAIQCQ</string>
+    <string name="achievement_50_points">CgkIl-eA88MSEAIQCg</string>
+    <string name="achievement_check_informations_section">CgkIl-eA88MSEAIQDA</string>
+    <string name="achievement_get_300_points">CgkIl-eA88MSEAIQDQ</string>
+    <string name="achievement_100_points">CgkIl-eA88MSEAIQCw</string>
+    <string name="achievement_rate_game">CgkIl-eA88MSEAIQDg</string>
 </resources>

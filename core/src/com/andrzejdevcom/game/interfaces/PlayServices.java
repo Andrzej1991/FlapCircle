@@ -12,4 +12,7 @@ public interface PlayServices
     boolean isSignedIn();
     void hideText();
     void showText();
+    void shareGame();
+    void muteAndUnmute();
+    void unlockInfoAchievement();
 }

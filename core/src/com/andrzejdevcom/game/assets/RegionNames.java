@@ -1,9 +1,5 @@
 package com.andrzejdevcom.game.assets;
 
-/**
- * Created by Andrzej on 2017-06-19.
- */
-
 public class RegionNames {
 
     public static final String PLAY = "play";
@@ -19,6 +15,10 @@ public class RegionNames {
     public static final String INFO = "information";
 
     public static final String SETTINGS = "settings";
+
+    public static final String VOLUME_ON = "volume_on";
+
+    public static final String VOLUME_OFF = "volume_off";
 
     private RegionNames() {
     }

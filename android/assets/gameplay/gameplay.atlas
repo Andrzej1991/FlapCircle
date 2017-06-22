@@ -1,54 +1,68 @@
 
 gameplay.png
-size: 1024,256
+size: 512,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 achievement
   rotate: false
-  xy: 132, 6
+  xy: 2, 132
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 information
   rotate: false
-  xy: 262, 6
+  xy: 132, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 392, 6
+  xy: 2, 2
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 2, 2
+  xy: 2, 262
   size: 128, 132
   orig: 128, 132
   offset: 0, 0
   index: -1
 rate
   rotate: false
-  xy: 522, 6
+  xy: 132, 136
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 settings
   rotate: false
-  xy: 652, 6
+  xy: 262, 266
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 share
   rotate: false
-  xy: 782, 6
+  xy: 132, 6
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+volume_off
+  rotate: false
+  xy: 262, 136
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+volume_on
+  rotate: false
+  xy: 262, 6
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

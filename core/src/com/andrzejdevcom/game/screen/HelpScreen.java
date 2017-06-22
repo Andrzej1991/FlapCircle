@@ -50,6 +50,7 @@ class HelpScreen implements Screen {
         viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
         stage = new Stage(viewport, game.getBatch());
         initUi();
+        game.playServices.unlockInfoAchievement();
     }
 
     @Override

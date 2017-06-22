@@ -43,7 +43,6 @@ class GameScreen implements Screen {
     private boolean changeScreen;
     private Sound hit, jump, score;
 
-
     GameScreen(SkippyFlowersGame game) {
         this.game = game;
         scoreController = game.getScoreController();
@@ -68,6 +67,7 @@ class GameScreen implements Screen {
         createNewFlower();
         restart();
         game.playServices.hideText();
+        game.playServices.unlockAchievement();
     }
 
     @Override
@@ -80,9 +80,9 @@ class GameScreen implements Screen {
         renderDebug();
         if (changeScreen) {
             scoreController.updateHighScore();
-            game.playServices.submitScore(Integer.parseInt(scoreController.getHighScoreString()));
             game.setScreen(new StartScreen(game));
         }
+
     }
 
     @Override
@@ -140,6 +140,7 @@ class GameScreen implements Screen {
         removePassedFlowers();
         checkCollision();
         updateScore();
+
     }
 
     private void checkCollision() {
@@ -217,14 +218,12 @@ class GameScreen implements Screen {
                     bottomflowerCollisionCircle.radius, 30);
             rendered.rect(bottomCollisionRectangle.x, bottomCollisionRectangle.y,
                     bottomCollisionRectangle.width, bottomCollisionRectangle.height);
-
             Circle topFlowersCollisionCircle = flower.getTopCollistionCircle();
             Rectangle topCollisionRectanlge = flower.getTopCollisionRect();
             rendered.circle(topFlowersCollisionCircle.x, topFlowersCollisionCircle.y,
                     topFlowersCollisionCircle.radius, 30);
             rendered.rect(topCollisionRectanlge.x, topCollisionRectanlge.y,
                     topCollisionRectanlge.width, topCollisionRectanlge.height);
-
             Rectangle sensorRectangle = flower.getSensorRectangle();
             rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height, 0, 0, 0, 0, 0);
         }

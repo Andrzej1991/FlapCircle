@@ -1,12 +1,16 @@
 package com.andrzejdevcom.game;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.andrzejdevcom.game.common.ScoreController;
 import com.andrzejdevcom.game.interfaces.PlayServices;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -45,7 +50,10 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     public TextView textView;
-    //
+    private AudioManager audioManager;
+    private boolean mute = true;
+    private ScoreController scoreController;
+
     private String value;
 
     Handler handler = new Handler() {
@@ -75,7 +83,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 value = dataSnapshot.getValue(String.class);
-                textView.setText(getString(R.string.curretly_prize_pool) + " " + value);
+                textView.setText(value);
             }
 
             @Override
@@ -84,6 +92,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
             }
         });
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
         RelativeLayout relativeLayout = new RelativeLayout(this);
         View gameView = initializeForView(new SkippyFlowersGame(this), cfg);
         relativeLayout.addView(gameView);
@@ -123,6 +132,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
             }
         };
         gameHelper.setup(gameHelperListener);
+        scoreController = new ScoreController();
     }
 
     @Override
@@ -195,11 +205,51 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     public void rateGame() {
         String str = "https://play.google.com/store/apps/details?id=com.company.andrzej.fastdraw";
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
+        if(isSignedIn()){
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    getString(R.string.achievement_rate_game));
+        }
     }
 
     @Override
     public void unlockAchievement() {
+        if (isSignedIn()) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    getString(R.string.achievement_first_game_login));
+        }
+        if (isSignedIn()) {
+            if (Integer.parseInt(scoreController.getHighScoreString()) >= 10) {
+                Games.Achievements.unlock(gameHelper.getApiClient(),
+                        getString(R.string.achievement_get_10_points));
+            }
+        }
+        if (isSignedIn()) {
+            if (Integer.parseInt(scoreController.getHighScoreString()) >= 20) {
+                Games.Achievements.unlock(gameHelper.getApiClient(),
+                        getString(R.string.achievement_20_points));
+            }
+        }
 
+        if (isSignedIn()) {
+            if (Integer.parseInt(scoreController.getHighScoreString()) >= 50) {
+                Games.Achievements.unlock(gameHelper.getApiClient(),
+                        getString(R.string.achievement_50_points));
+            }
+        }
+
+        if (isSignedIn()) {
+            if (Integer.parseInt(scoreController.getHighScoreString()) >= 100) {
+                Games.Achievements.unlock(gameHelper.getApiClient(),
+                        getString(R.string.achievement_100_points));
+            }
+        }
+
+        if (isSignedIn()) {
+            if (Integer.parseInt(scoreController.getHighScoreString()) >= 300) {
+                Games.Achievements.unlock(gameHelper.getApiClient(),
+                        getString(R.string.achievement_get_300_points));
+            }
+        }
     }
 
     @Override
@@ -213,7 +263,8 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     @Override
     public void showAchievement() {
         if (isSignedIn()) {
-
+            startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()),
+                    requestCode);
         } else {
             signIn();
         }
@@ -252,6 +303,37 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
                 textView.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    public void shareGame() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Wow. I'm playing FlapCircle,\n will you bear me?");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void muteAndUnmute() {
+        if (mute) {
+            mute = false;
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
+        } else {
+            mute = true;
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+                    AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_SHOW_UI);
+        }
+    }
+
+    @Override
+    public void unlockInfoAchievement() {
+        if (isSignedIn()) {
+            Games.Achievements.unlock(gameHelper.getApiClient(),
+                    getString(R.string.achievement_check_informations_section));
+        }
     }
 
     @Override

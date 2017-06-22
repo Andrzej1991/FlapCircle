@@ -15,6 +15,8 @@ public class GameConfig {
     public static final float GAP_BETWEEN_FLOWERS = 8f;
     public static final float HUD_WIDTH = Gdx.graphics.getWidth();
     public static final float HUD_HEOGHT = Gdx.graphics.getHeight();
+    public static final float VOLUME_ON = 1.0f;
+    public static final float VOLUME_OFF = 0f;
 
     private GameConfig() {
     }

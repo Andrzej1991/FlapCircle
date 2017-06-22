@@ -9,6 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SkippyFlowersGame extends Game {
@@ -16,8 +17,10 @@ public class SkippyFlowersGame extends Game {
     private ScoreController scoreController;
     private AssetManager assetManager;
     private SpriteBatch batch;
+    private Music music;
     private AdHandler adHandler;
     boolean toggle;
+    private Sound sound;
 
     public static PlayServices playServices;
 
@@ -39,12 +42,20 @@ public class SkippyFlowersGame extends Game {
         assetManager.load(AssetDescriptors.HIT);
         assetManager.load(AssetDescriptors.JUMP);
         assetManager.load(AssetDescriptors.SCORE);
-        Music music = Gdx.audio.newMusic(Gdx.files.internal(AssetPaths.BG_MUSIC));
+        music = Gdx.audio.newMusic(Gdx.files.internal(AssetPaths.BG_MUSIC));
         music.setVolume(0.4f);
         music.setLooping(true);
         music.play();
         assetManager.finishLoading();
         setScreen(new StartScreen(this));
+    }
+
+    public Music getMusic() {
+        return music;
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 
     public ScoreController getScoreController() {

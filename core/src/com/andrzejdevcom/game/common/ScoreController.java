@@ -15,7 +15,6 @@ public class ScoreController {
     public ScoreController(){
         prefs = Gdx.app.getPreferences(SkippyFlowersGame.class.getSimpleName());
         highScore = prefs.getInteger(HIGHT_SCORE_KEY, 0);
-
     }
 
     public void incrementScore(){

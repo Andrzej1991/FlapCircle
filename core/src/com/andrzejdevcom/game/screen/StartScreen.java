@@ -36,6 +36,7 @@ public class StartScreen implements Screen {
         StartScreen.game = game;
         assetManager = game.getAssetManager();
         scoreController = game.getScoreController();
+        game.playServices.submitScore(Integer.parseInt(scoreController.getHighScoreString()));
     }
 
     @Override
@@ -71,6 +72,12 @@ public class StartScreen implements Screen {
         TextureRegion achievementRegion = atlas.findRegion(RegionNames.ACHIEVEMENT);
         achievementBoard = new ImageButton(new TextureRegionDrawable(achievementRegion));
         achievementBoard.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 2f, Align.center);
+        achievementBoard.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.playServices.showAchievement();
+            }
+        });
 
         TextureRegion infoRegion = atlas.findRegion(RegionNames.INFO);
         info = new ImageButton(new TextureRegionDrawable(infoRegion));
@@ -85,10 +92,22 @@ public class StartScreen implements Screen {
         TextureRegion settingsRegion = atlas.findRegion(RegionNames.SETTINGS);
         settings = new ImageButton(new TextureRegionDrawable(settingsRegion));
         settings.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 12f, Align.center);
+        settings.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
 
         TextureRegion shareRegion = atlas.findRegion(RegionNames.SHARE);
         share = new ImageButton(new TextureRegionDrawable(shareRegion));
         share.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 4.7f, Align.center);
+        share.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.playServices.shareGame();
+            }
+        });
         TextureRegion rateRegion = atlas.findRegion(RegionNames.RATE);
         rate = new ImageButton(new TextureRegionDrawable(rateRegion));
         rate.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 4.7f, Align.center);
@@ -115,6 +134,7 @@ public class StartScreen implements Screen {
         labeStyle.font = assetManager.get(AssetDescriptors.SCORE_FONT);
         labeStyle.fontColor = Color.WHITE;
         String scoreString = "Best score: " + scoreController.getHighScoreString();
+        game.playServices.unlockAchievement();
         Label bestScore = new Label(scoreString, labeStyle);
         bestScore.setPosition(
                 GameConfig.HUD_WIDTH / 2f,
