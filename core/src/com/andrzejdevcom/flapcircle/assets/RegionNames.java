@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game.assets;
+package com.andrzejdevcom.flapcircle.assets;
 
 public class RegionNames {
 
@@ -15,6 +15,12 @@ public class RegionNames {
     public static final String INFO = "information";
 
     public static final String SETTINGS = "settings";
+
+    public static final String MERKEL_BOTTOM = "merker_bottom";
+
+    public static final String MERKEL_TOP = "top_merker";
+
+    public static final String TRUMP = "trump";
 
     public static final String VOLUME_ON = "volume_on";
 

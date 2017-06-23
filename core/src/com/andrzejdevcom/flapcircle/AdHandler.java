@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game;
+package com.andrzejdevcom.flapcircle;
 
 
 interface AdHandler {

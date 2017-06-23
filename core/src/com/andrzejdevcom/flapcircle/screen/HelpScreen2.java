@@ -1,8 +1,7 @@
-package com.andrzejdevcom.game.screen;
+package com.andrzejdevcom.flapcircle.screen;
 
-import com.andrzejdevcom.game.SkippyFlowersGame;
-import com.andrzejdevcom.game.assets.AssetDescriptors;
-import com.andrzejdevcom.game.config.GameConfig;
+import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
+import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,18 +14,18 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class HelpScreen implements Screen {
+class HelpScreen2 implements Screen {
+
     private SkippyFlowersGame game;
-
-    private final AssetManager assetManager;
     private Viewport viewport;
-    private Stage stage;
     private Texture texture;
+    private AssetManager assetManager;
+    private Stage stage;
 
-    HelpScreen(SkippyFlowersGame game) {
+    HelpScreen2(SkippyFlowersGame game) {
         this.game = game;
+        texture = new Texture("help2.png");
         assetManager = game.getAssetManager();
-        texture = new Texture("help.png");
         game.playServices.hideText();
     }
 
@@ -44,13 +43,11 @@ class HelpScreen implements Screen {
         stage.addActor(infoText);
     }
 
-
     @Override
     public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        viewport = new FitViewport(com.andrzejdevcom.flapcircle.config.GameConfig.HUD_WIDTH, com.andrzejdevcom.flapcircle.config.GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         initUi();
-        game.playServices.unlockInfoAchievement();
     }
 
     @Override
@@ -63,7 +60,7 @@ class HelpScreen implements Screen {
         stage.act();
         stage.draw();
         if (Gdx.input.justTouched()) {
-            game.setScreen(new HelpScreen1(game));
+            game.setScreen(new StartScreen(game));
         }
     }
 
@@ -89,7 +86,7 @@ class HelpScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
         texture.dispose();
+        stage.dispose();
     }
 }

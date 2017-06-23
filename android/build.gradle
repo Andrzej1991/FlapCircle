@@ -20,11 +20,11 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.andrzejdevcom.game"
+        applicationId "com.andrzejdevcom.flapcircle"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.3"
     }
     buildTypes {
         release {
@@ -80,7 +80,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.andrzejdevcom.game/com.andrzejdevcom.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.andrzejdevcom.game/AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.

@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game.interfaces;
+package com.andrzejdevcom.flapcircle.interfaces;
 
 public interface PlayServices
 {

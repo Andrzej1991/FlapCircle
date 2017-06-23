@@ -1,11 +1,12 @@
-package com.andrzejdevcom.game.screen;
+package com.andrzejdevcom.flapcircle.screen;
 
-import com.andrzejdevcom.game.SkippyFlowersGame;
-import com.andrzejdevcom.game.assets.AssetDescriptors;
-import com.andrzejdevcom.game.common.ScoreController;
-import com.andrzejdevcom.game.config.GameConfig;
-import com.andrzejdevcom.game.entity.Flower;
-import com.andrzejdevcom.game.entity.Skippy;
+import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
+import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flapcircle.assets.RegionNames;
+import com.andrzejdevcom.flapcircle.common.ScoreController;
+import com.andrzejdevcom.flapcircle.config.GameConfig;
+import com.andrzejdevcom.flapcircle.entity.Flower;
+import com.andrzejdevcom.flapcircle.entity.Skippy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,10 +16,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
@@ -42,6 +43,8 @@ class GameScreen implements Screen {
     private float skippyStartY;
     private boolean changeScreen;
     private Sound hit, jump, score;
+    private TextureRegion topRegion, botRegion, trumpRegion;
+    private float animationTimer;
 
     GameScreen(SkippyFlowersGame game) {
         this.game = game;
@@ -54,7 +57,7 @@ class GameScreen implements Screen {
     public void show() {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
-        hudViewport = new StretchViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        hudViewport = new StretchViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         rendered = new ShapeRenderer();
         font = assetManager.get(AssetDescriptors.SCORE_FONT);
         skippyStartX = GameConfig.WORLD_WIDTH / 4f;
@@ -64,6 +67,11 @@ class GameScreen implements Screen {
         score = assetManager.get(AssetDescriptors.SCORE);
         skippe = new Skippy();
         skippe.setPosition(skippyStartX, skippyStartY);
+        TextureAtlas atlas = assetManager.get(AssetDescriptors.GAME_PLAY);
+        botRegion = atlas.findRegion(RegionNames.MERKEL_BOTTOM);
+        topRegion = atlas.findRegion(RegionNames.MERKEL_TOP);
+        trumpRegion = atlas.findRegion(RegionNames.TRUMP);
+
         createNewFlower();
         restart();
         game.playServices.hideText();
@@ -76,6 +84,7 @@ class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(delta);
         hudViewport.apply();
+        renderGamePlay();
         renderHud();
         renderDebug();
         if (changeScreen) {
@@ -83,6 +92,26 @@ class GameScreen implements Screen {
             game.setScreen(new StartScreen(game));
         }
 
+    }
+
+    private void renderGamePlay() {
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        drawGamePlay();
+        batch.end();
+    }
+
+    private void drawGamePlay() {
+        batch.draw(trumpRegion, skippe.getX() - GameConfig.SKIPPY_HALF_SIZE, skippe.getY() - GameConfig.SKIPPY_HALF_SIZE,
+                GameConfig.SKIPPY_SIZE, GameConfig.SKIPPY_SIZE);
+        for (Flower flower : flowers) {
+            float bottmRegionX = flower.getBottomcollistionCircle().x - Flower.WIDTH / 2f;
+            float bottomRegionY = flower.getBottomCollisionRect().y + flower.getBottomcollistionCircle().radius;
+            batch.draw(botRegion, bottmRegionX, bottomRegionY, Flower.WIDTH, Flower.HEIGHT);
+            float topRegionX = flower.getTopCollistionCircle().x - Flower.WIDTH / 2;
+            float topRegionY = flower.getTopCollisionRect().y - flower.getTopCollistionCircle().radius;
+            batch.draw(topRegion, topRegionX, topRegionY, Flower.WIDTH, Flower.HEIGHT);
+        }
     }
 
     @Override
@@ -122,7 +151,7 @@ class GameScreen implements Screen {
         String scoreString = scoreController.getScoreString();
         glyph.setText(font, scoreString);
         float scoreX = (GameConfig.HUD_WIDTH - glyph.width) / 2f;
-        float scoreY = 4 * GameConfig.HUD_HEOGHT / 5 - glyph.height / 2;
+        float scoreY = 4 * GameConfig.HUD_HEIGHT / 5 - glyph.height / 2;
         font.draw(batch, scoreString, scoreX, scoreY);
     }
 
@@ -208,24 +237,26 @@ class GameScreen implements Screen {
     }
 
     private void drawDebug() {
-        Circle skippyCollisionsCircle = skippe.getCollistionCircle();
-        rendered.circle(skippyCollisionsCircle.x, skippyCollisionsCircle.y,
-                skippyCollisionsCircle.radius, 30);
-        for (Flower flower : flowers) {
-            Circle bottomflowerCollisionCircle = flower.getBottomcollistionCircle();
-            Rectangle bottomCollisionRectangle = flower.getBottomCollisionRect();
-            rendered.circle(bottomflowerCollisionCircle.x, bottomflowerCollisionCircle.y,
-                    bottomflowerCollisionCircle.radius, 30);
-            rendered.rect(bottomCollisionRectangle.x, bottomCollisionRectangle.y,
-                    bottomCollisionRectangle.width, bottomCollisionRectangle.height);
-            Circle topFlowersCollisionCircle = flower.getTopCollistionCircle();
-            Rectangle topCollisionRectanlge = flower.getTopCollisionRect();
-            rendered.circle(topFlowersCollisionCircle.x, topFlowersCollisionCircle.y,
-                    topFlowersCollisionCircle.radius, 30);
-            rendered.rect(topCollisionRectanlge.x, topCollisionRectanlge.y,
-                    topCollisionRectanlge.width, topCollisionRectanlge.height);
-            Rectangle sensorRectangle = flower.getSensorRectangle();
-            rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height, 0, 0, 0, 0, 0);
-        }
+//        Circle skippyCollisionsCircle = skippe.getCollistionCircle();
+//        rendered.circle(skippyCollisionsCircle.x, skippyCollisionsCircle.y,
+//                skippyCollisionsCircle.radius, 30);
+//        for (Flower flower : flowers) {
+//            Circle bottomflowerCollisionCircle = flower.getBottomcollistionCircle();
+//            Rectangle bottomCollisionRectangle = flower.getBottomCollisionRect();
+//            rendered.circle(bottomflowerCollisionCircle.x, bottomflowerCollisionCircle.y,
+//                    bottomflowerCollisionCircle.radius, 30);
+//            rendered.rect(bottomCollisionRectangle.x, bottomCollisionRectangle.y,
+//                    bottomCollisionRectangle.width, bottomCollisionRectangle.height);
+//            Circle topFlowersCollisionCircle = flower.getTopCollistionCircle();
+//            Rectangle topCollisionRectanlge = flower.getTopCollisionRect();
+//            rendered.circle(topFlowersCollisionCircle.x, topFlowersCollisionCircle.y,
+//                    topFlowersCollisionCircle.radius, 30);
+//            rendered.rect(topCollisionRectanlge.x, topCollisionRectanlge.y,
+//                    topCollisionRectanlge.width, topCollisionRectanlge.height);
+//            Rectangle sensorRectangle = flower.getSensorRectangle();
+//            rendered.rect(sensorRectangle.x, sensorRectangle.y, sensorRectangle.width, sensorRectangle.height, 0, 0, 0, 0, 0);
+//        }
     }
+
+
 }

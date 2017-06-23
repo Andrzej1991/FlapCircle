@@ -1,10 +1,10 @@
-package com.andrzejdevcom.game.screen;
+package com.andrzejdevcom.flapcircle.screen;
 
-import com.andrzejdevcom.game.SkippyFlowersGame;
-import com.andrzejdevcom.game.assets.AssetDescriptors;
-import com.andrzejdevcom.game.assets.RegionNames;
-import com.andrzejdevcom.game.common.ScoreController;
-import com.andrzejdevcom.game.config.GameConfig;
+import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
+import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flapcircle.assets.RegionNames;
+import com.andrzejdevcom.flapcircle.common.ScoreController;
+import com.andrzejdevcom.flapcircle.config.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -41,7 +41,7 @@ public class StartScreen implements Screen {
 
     @Override
     public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         initUI();
         Gdx.input.setInputProcessor(stage);
@@ -52,7 +52,7 @@ public class StartScreen implements Screen {
         TextureAtlas atlas = assetManager.get(AssetDescriptors.GAME_PLAY);
         TextureRegion playRegion = atlas.findRegion(RegionNames.PLAY);
         play = new ImageButton(new TextureRegionDrawable(playRegion));
-        play.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 3f, Align.center);
+        play.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEIGHT / 3f, Align.center);
         play.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -62,7 +62,7 @@ public class StartScreen implements Screen {
         });
         TextureRegion leaderboardRegion = atlas.findRegion(RegionNames.LEADERBOARD);
         leaderBoard = new ImageButton(new TextureRegionDrawable(leaderboardRegion));
-        leaderBoard.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 2f, Align.center);
+        leaderBoard.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEIGHT / 2f, Align.center);
         leaderBoard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -71,7 +71,7 @@ public class StartScreen implements Screen {
         });
         TextureRegion achievementRegion = atlas.findRegion(RegionNames.ACHIEVEMENT);
         achievementBoard = new ImageButton(new TextureRegionDrawable(achievementRegion));
-        achievementBoard.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 2f, Align.center);
+        achievementBoard.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEIGHT / 2f, Align.center);
         achievementBoard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -81,17 +81,17 @@ public class StartScreen implements Screen {
 
         TextureRegion infoRegion = atlas.findRegion(RegionNames.INFO);
         info = new ImageButton(new TextureRegionDrawable(infoRegion));
-        info.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 2f, Align.center);
+        info.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEIGHT / 2f, Align.center);
         info.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new HelpScreen(game));
+                game.setScreen(new HelpScreen1(game));
             }
         });
 
         TextureRegion settingsRegion = atlas.findRegion(RegionNames.SETTINGS);
         settings = new ImageButton(new TextureRegionDrawable(settingsRegion));
-        settings.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEOGHT / 12f, Align.center);
+        settings.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEIGHT / 12f, Align.center);
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -101,7 +101,7 @@ public class StartScreen implements Screen {
 
         TextureRegion shareRegion = atlas.findRegion(RegionNames.SHARE);
         share = new ImageButton(new TextureRegionDrawable(shareRegion));
-        share.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEOGHT / 4.7f, Align.center);
+        share.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEIGHT / 4.7f, Align.center);
         share.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -110,7 +110,7 @@ public class StartScreen implements Screen {
         });
         TextureRegion rateRegion = atlas.findRegion(RegionNames.RATE);
         rate = new ImageButton(new TextureRegionDrawable(rateRegion));
-        rate.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEOGHT / 4.7f, Align.center);
+        rate.setPosition(GameConfig.HUD_WIDTH / 4f, GameConfig.HUD_HEIGHT / 4.7f, Align.center);
         rate.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -118,7 +118,6 @@ public class StartScreen implements Screen {
                 game.playServices.rateGame();
             }
         });
-
     }
 
     private void initUI() {
@@ -138,7 +137,7 @@ public class StartScreen implements Screen {
         Label bestScore = new Label(scoreString, labeStyle);
         bestScore.setPosition(
                 GameConfig.HUD_WIDTH / 2f,
-                3 * GameConfig.HUD_HEOGHT / 4.5f,
+                3 * GameConfig.HUD_HEIGHT / 4.5f,
                 Align.center
         );
         stage.addActor(bestScore);

@@ -1,7 +1,5 @@
-package com.andrzejdevcom.game.screen;
+package com.andrzejdevcom.flapcircle.screen;
 
-import com.andrzejdevcom.game.SkippyFlowersGame;
-import com.andrzejdevcom.game.config.GameConfig;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -27,7 +25,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
 
     private Viewport viewport;
     private Stage stage;
-    public static SkippyFlowersGame game;
+    public static com.andrzejdevcom.flapcircle.SkippyFlowersGame game;
     private ImageButton play, leaderBoard, achievementBoard, info, settings, share, rate;
     private boolean soundFlag = true;
 
@@ -36,14 +34,14 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
     private TextButton muteAllOption;
     private TextButton exitOption;
 
-    SettingsScreen(SkippyFlowersGame game) {
+    SettingsScreen(com.andrzejdevcom.flapcircle.SkippyFlowersGame game) {
         this.game = game;
-        prefs = Gdx.app.getPreferences(SkippyFlowersGame.class.getSimpleName());
+        prefs = Gdx.app.getPreferences(com.andrzejdevcom.flapcircle.SkippyFlowersGame.class.getSimpleName());
     }
 
     @Override
     public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        viewport = new FitViewport(com.andrzejdevcom.flapcircle.config.GameConfig.HUD_WIDTH, com.andrzejdevcom.flapcircle.config.GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         initUI();
         Gdx.input.setInputProcessor(stage);
@@ -87,22 +85,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
 
             }
         });
-        muteAllOption = new TextButton("SOUNDS,MUSIC ON", textButtonStyle);
-        muteAllOption.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if (soundFlag) {
-                    game.playServices.muteAndUnmute();
-                    muteAllOption.setText("SOUNDS,MUSIC OFF");
-                    soundFlag = false;
-                } else {
-                    game.playServices.muteAndUnmute();
-                    muteAllOption.setText("SOUNDS,MUSIC ON");
-                    soundFlag = true;
-                }
-            }
-        });
+
         exitOption = new TextButton("EXIT", textButtonStyle);
         exitOption.setSize(3f, 3f);
         exitOption.addListener(new ClickListener() {
@@ -112,13 +95,11 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
                 game.setScreen(new StartScreen(game));
             }
         });
-        table.add(musicOptions).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
+        table.add(musicOptions).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
         table.row();
-        table.add(soundOption).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
+        table.add(soundOption).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
         table.row();
-        table.add(muteAllOption).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
-        table.row();
-        table.add(exitOption).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
+        table.add(exitOption).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
         table.row();
         stage.addActor(table);
     }

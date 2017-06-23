@@ -1,10 +1,7 @@
-package com.andrzejdevcom.game;
+package com.andrzejdevcom.flapcircle;
 
-import com.andrzejdevcom.game.assets.AssetDescriptors;
-import com.andrzejdevcom.game.assets.AssetPaths;
-import com.andrzejdevcom.game.common.ScoreController;
-import com.andrzejdevcom.game.interfaces.PlayServices;
-import com.andrzejdevcom.game.screen.StartScreen;
+import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flapcircle.common.ScoreController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -22,13 +19,13 @@ public class SkippyFlowersGame extends Game {
     boolean toggle;
     private Sound sound;
 
-    public static PlayServices playServices;
+    public static com.andrzejdevcom.flapcircle.interfaces.PlayServices playServices;
 
     public SkippyFlowersGame(){
 
     }
 
-    SkippyFlowersGame(PlayServices playServices){
+    SkippyFlowersGame(com.andrzejdevcom.flapcircle.interfaces.PlayServices playServices){
         SkippyFlowersGame.playServices = playServices;
     }
 
@@ -42,12 +39,12 @@ public class SkippyFlowersGame extends Game {
         assetManager.load(AssetDescriptors.HIT);
         assetManager.load(AssetDescriptors.JUMP);
         assetManager.load(AssetDescriptors.SCORE);
-        music = Gdx.audio.newMusic(Gdx.files.internal(AssetPaths.BG_MUSIC));
+        music = Gdx.audio.newMusic(Gdx.files.internal(com.andrzejdevcom.flapcircle.assets.AssetPaths.BG_MUSIC));
         music.setVolume(0.4f);
         music.setLooping(true);
         music.play();
         assetManager.finishLoading();
-        setScreen(new StartScreen(this));
+        setScreen(new com.andrzejdevcom.flapcircle.screen.StartScreen(this));
     }
 
     public Music getMusic() {

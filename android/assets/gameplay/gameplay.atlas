@@ -1,68 +1,89 @@
 
 gameplay.png
-size: 512,512
+size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 achievement
   rotate: false
-  xy: 2, 132
+  xy: 126, 240
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 information
   rotate: false
-  xy: 132, 266
+  xy: 256, 374
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 2, 2
+  xy: 126, 110
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+merker_bottom
+  rotate: false
+  xy: 2, 2
+  size: 60, 500
+  orig: 60, 500
+  offset: 0, 0
+  index: -1
 play
   rotate: false
-  xy: 2, 262
+  xy: 126, 370
   size: 128, 132
   orig: 128, 132
   offset: 0, 0
   index: -1
 rate
   rotate: false
-  xy: 132, 136
+  xy: 256, 244
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 settings
   rotate: false
-  xy: 262, 266
+  xy: 386, 374
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 share
   rotate: false
-  xy: 132, 6
+  xy: 256, 114
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+top_merker
+  rotate: false
+  xy: 64, 2
+  size: 60, 500
+  orig: 60, 500
+  offset: 0, 0
+  index: -1
+trump
+  rotate: false
+  xy: 126, 10
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
 volume_off
   rotate: false
-  xy: 262, 136
+  xy: 386, 244
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 volume_on
   rotate: false
-  xy: 262, 6
+  xy: 516, 374
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

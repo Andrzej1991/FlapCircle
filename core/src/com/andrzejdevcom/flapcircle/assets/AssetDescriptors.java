@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game.assets;
+package com.andrzejdevcom.flapcircle.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.audio.Sound;

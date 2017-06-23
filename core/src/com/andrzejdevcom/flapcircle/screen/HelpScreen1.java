@@ -1,8 +1,8 @@
-package com.andrzejdevcom.game.screen;
+package com.andrzejdevcom.flapcircle.screen;
 
-import com.andrzejdevcom.game.SkippyFlowersGame;
-import com.andrzejdevcom.game.assets.AssetDescriptors;
-import com.andrzejdevcom.game.config.GameConfig;
+import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
+import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flapcircle.config.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -28,6 +28,7 @@ class HelpScreen1 implements Screen {
         texture = new Texture("help1.png");
         assetManager = game.getAssetManager();
         game.playServices.hideText();
+        game.playServices.unlockInfoAchievement();
     }
 
     private void initUi() {
@@ -46,7 +47,7 @@ class HelpScreen1 implements Screen {
 
     @Override
     public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEOGHT);
+        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         initUi();
     }

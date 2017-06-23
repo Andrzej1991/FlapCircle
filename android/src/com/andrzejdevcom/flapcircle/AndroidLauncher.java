@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game;
+package com.andrzejdevcom.flapcircle;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,8 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.andrzejdevcom.game.common.ScoreController;
-import com.andrzejdevcom.game.interfaces.PlayServices;
+import com.andrzejdevcom.flapcircle.common.ScoreController;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdListener;
@@ -38,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.badlogic.gdx.Gdx.app;
 
-public class AndroidLauncher extends AndroidApplication implements PlayServices, AdHandler {
+public class AndroidLauncher extends AndroidApplication implements com.andrzejdevcom.flapcircle.interfaces.PlayServices, AdHandler {
 
     private static final String AD_UNIT_ID = "ca-app-pub-2389435775598003/5244502571";
     private static final int SHOW_ADS = 1;
@@ -203,11 +202,11 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
 
     @Override
     public void rateGame() {
-        String str = "https://play.google.com/store/apps/details?id=com.company.andrzej.fastdraw";
+        String str = "https://play.google.com/store/apps/details?id=com.andrzejdevcom.flapcircle";
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
         if(isSignedIn()){
             Games.Achievements.unlock(gameHelper.getApiClient(),
-                    getString(R.string.achievement_rate_game));
+                    getString(R.string.achievement_rate_me));
         }
     }
 
@@ -215,12 +214,12 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     public void unlockAchievement() {
         if (isSignedIn()) {
             Games.Achievements.unlock(gameHelper.getApiClient(),
-                    getString(R.string.achievement_first_game_login));
+                    getString(R.string.achievement_first_login));
         }
         if (isSignedIn()) {
             if (Integer.parseInt(scoreController.getHighScoreString()) >= 10) {
                 Games.Achievements.unlock(gameHelper.getApiClient(),
-                        getString(R.string.achievement_get_10_points));
+                        getString(R.string.achievement_10_points));
             }
         }
         if (isSignedIn()) {
@@ -233,14 +232,14 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
         if (isSignedIn()) {
             if (Integer.parseInt(scoreController.getHighScoreString()) >= 50) {
                 Games.Achievements.unlock(gameHelper.getApiClient(),
-                        getString(R.string.achievement_50_points));
+                        getString(R.string.achievement_get_50_points));
             }
         }
 
         if (isSignedIn()) {
             if (Integer.parseInt(scoreController.getHighScoreString()) >= 100) {
                 Games.Achievements.unlock(gameHelper.getApiClient(),
-                        getString(R.string.achievement_100_points));
+                        getString(R.string.achievement_get_100_points));
             }
         }
 
@@ -256,7 +255,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     public void submitScore(int highScore) {
         if (isSignedIn()) {
             Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_highest), highScore);
+                    getString(R.string.leaderboard_july_ranking), highScore);
         }
     }
 
@@ -274,7 +273,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     public void showScore() {
         if (isSignedIn()) {
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_highest)), requestCode);
+                    getString(R.string.leaderboard_july_ranking)), requestCode);
         } else {
             signIn();
         }
@@ -332,7 +331,7 @@ public class AndroidLauncher extends AndroidApplication implements PlayServices,
     public void unlockInfoAchievement() {
         if (isSignedIn()) {
             Games.Achievements.unlock(gameHelper.getApiClient(),
-                    getString(R.string.achievement_check_informations_section));
+                    getString(R.string.achievement_check_informations));
         }
     }
 

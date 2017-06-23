@@ -1,4 +1,4 @@
-package com.andrzejdevcom.game.assets;
+package com.andrzejdevcom.flapcircle.assets;
 
 public class AssetPaths {
 
