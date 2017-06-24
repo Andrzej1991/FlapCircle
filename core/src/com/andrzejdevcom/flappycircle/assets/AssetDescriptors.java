@@ -1,4 +1,4 @@
-package com.andrzejdevcom.flapcircle.assets;
+package com.andrzejdevcom.flappycircle.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.audio.Sound;

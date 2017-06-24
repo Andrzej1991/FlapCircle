@@ -1,27 +1,38 @@
 {
   "project_info": {
-    "project_number": "636701651863",
-    "firebase_url": "https://flappycircle-a5cb0.firebaseio.com",
-    "project_id": "flappycircle-a5cb0",
-    "storage_bucket": "flappycircle-a5cb0.appspot.com"
+    "project_number": "90026741351",
+    "firebase_url": "https://flappy-circle-bd3b4.firebaseio.com",
+    "project_id": "flappy-circle-bd3b4",
+    "storage_bucket": "flappy-circle-bd3b4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:636701651863:android:f43f4d34390cd56e",
+        "mobilesdk_app_id": "1:90026741351:android:20bd125c33bdd1db",
         "android_client_info": {
-          "package_name": "com.andrzejdevcom.flapcircle"
+          "package_name": "com.andrzejdevcom.flappycircle"
         }
       },
       "oauth_client": [
         {
-          "client_id": "636701651863-8m76ctgeavfptrq60pvjmu6m0ie1vmub.apps.googleusercontent.com",
+          "client_id": "90026741351-bufkae37sf0s7paeosfdbq541012k61q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andrzejdevcom.flappycircle",
+            "certificate_hash": "f841299fd0eae19842d6d87cef691ce4158f1072"
+          }
+        },
+        {
+          "client_id": "90026741351-45p00s5gci7prraje001dkkfg5n4o4re.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEb-pUzsKUk5iq7cb23Mtek7FNNOo6OWk"
+          "current_key": "AIzaSyB2G_ns5ohr8F5pJPhoIpHvb28_jomW97M"
+        },
+        {
+          "current_key": "AIzaSyB5uixWm0KJH41Ot1LHUrxlkLrk9iVjf9E"
         }
       ],
       "services": {
@@ -29,8 +40,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90026741351-45p00s5gci7prraje001dkkfg5n4o4re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

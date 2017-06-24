@@ -1,4 +1,4 @@
-package com.andrzejdevcom.flapcircle;
+package com.andrzejdevcom.flappycircle;
 
 
 interface AdHandler {

@@ -1,12 +1,14 @@
-package com.andrzejdevcom.flapcircle;
+package com.andrzejdevcom.flappycircle;
 
-import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
-import com.andrzejdevcom.flapcircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flappycircle.assets.AssetPaths;
+import com.andrzejdevcom.flappycircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.interfaces.PlayServices;
+import com.andrzejdevcom.flappycircle.screen.StartScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SkippyFlowersGame extends Game {
@@ -15,18 +17,16 @@ public class SkippyFlowersGame extends Game {
     private AssetManager assetManager;
     private SpriteBatch batch;
     private Music music;
-    private AdHandler adHandler;
-    boolean toggle;
-    private Sound sound;
+    private String currentGameScore;
 
-    public static com.andrzejdevcom.flapcircle.interfaces.PlayServices playServices;
+    public static PlayServices playServices;
 
     public SkippyFlowersGame(){
 
     }
 
-    SkippyFlowersGame(com.andrzejdevcom.flapcircle.interfaces.PlayServices playServices){
-        SkippyFlowersGame.playServices = playServices;
+    SkippyFlowersGame(PlayServices playServices){
+        this.playServices = playServices;
     }
 
     @Override
@@ -39,24 +39,24 @@ public class SkippyFlowersGame extends Game {
         assetManager.load(AssetDescriptors.HIT);
         assetManager.load(AssetDescriptors.JUMP);
         assetManager.load(AssetDescriptors.SCORE);
-        music = Gdx.audio.newMusic(Gdx.files.internal(com.andrzejdevcom.flapcircle.assets.AssetPaths.BG_MUSIC));
+        music = Gdx.audio.newMusic(Gdx.files.internal(AssetPaths.BG_MUSIC));
         music.setVolume(0.4f);
         music.setLooping(true);
         music.play();
         assetManager.finishLoading();
-        setScreen(new com.andrzejdevcom.flapcircle.screen.StartScreen(this));
+        setScreen(new StartScreen(this));
     }
 
     public Music getMusic() {
         return music;
     }
 
-    public Sound getSound() {
-        return sound;
-    }
-
     public ScoreController getScoreController() {
         return scoreController;
+    }
+
+    public void setCurrentGameScore(String currentGameScore) {
+        this.currentGameScore = currentGameScore;
     }
 
     public AssetManager getAssetManager() {
@@ -65,6 +65,10 @@ public class SkippyFlowersGame extends Game {
 
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public String getCurrentGameScore() {
+        return currentGameScore;
     }
 
     @Override

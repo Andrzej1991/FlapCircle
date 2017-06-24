@@ -1,4 +1,4 @@
-package com.andrzejdevcom.flapcircle.desktop;
+package com.andrzejdevcom.flappycircle.desktop;
 
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 

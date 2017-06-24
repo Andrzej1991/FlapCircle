@@ -1,12 +1,12 @@
-package com.andrzejdevcom.flapcircle.screen;
+package com.andrzejdevcom.flappycircle.screen;
 
-import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
-import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
-import com.andrzejdevcom.flapcircle.assets.RegionNames;
-import com.andrzejdevcom.flapcircle.common.ScoreController;
-import com.andrzejdevcom.flapcircle.config.GameConfig;
-import com.andrzejdevcom.flapcircle.entity.Flower;
-import com.andrzejdevcom.flapcircle.entity.Skippy;
+import com.andrzejdevcom.flappycircle.SkippyFlowersGame;
+import com.andrzejdevcom.flappycircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flappycircle.assets.RegionNames;
+import com.andrzejdevcom.flappycircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.config.GameConfig;
+import com.andrzejdevcom.flappycircle.entity.Flower;
+import com.andrzejdevcom.flappycircle.entity.Skippy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -44,7 +44,6 @@ class GameScreen implements Screen {
     private boolean changeScreen;
     private Sound hit, jump, score;
     private TextureRegion topRegion, botRegion, trumpRegion;
-    private float animationTimer;
 
     GameScreen(SkippyFlowersGame game) {
         this.game = game;
@@ -89,7 +88,7 @@ class GameScreen implements Screen {
         renderDebug();
         if (changeScreen) {
             scoreController.updateHighScore();
-            game.setScreen(new StartScreen(game));
+            game.setScreen(new ScoreDialogScreen(game));
         }
 
     }
@@ -107,7 +106,7 @@ class GameScreen implements Screen {
         for (Flower flower : flowers) {
             float bottmRegionX = flower.getBottomcollistionCircle().x - Flower.WIDTH / 2f;
             float bottomRegionY = flower.getBottomCollisionRect().y + flower.getBottomcollistionCircle().radius;
-            batch.draw(botRegion, bottmRegionX, bottomRegionY, Flower.WIDTH, Flower.HEIGHT);
+            batch.draw(botRegion, bottmRegionX, bottomRegionY,Flower.WIDTH, Flower.HEIGHT);
             float topRegionX = flower.getTopCollistionCircle().x - Flower.WIDTH / 2;
             float topRegionY = flower.getTopCollisionRect().y - flower.getTopCollistionCircle().radius;
             batch.draw(topRegion, topRegionX, topRegionY, Flower.WIDTH, Flower.HEIGHT);
@@ -169,6 +168,7 @@ class GameScreen implements Screen {
         removePassedFlowers();
         checkCollision();
         updateScore();
+        game.setCurrentGameScore(scoreController.getScoreString());
 
     }
 
@@ -190,7 +190,7 @@ class GameScreen implements Screen {
     private void removePassedFlowers() {
         if (flowers.size > 0) {
             Flower firstFlower = flowers.first();
-            if (firstFlower.getX() < -Flower.WIDTH) {
+            if (firstFlower.getX() <- Flower.WIDTH) {
                 flowers.removeValue(firstFlower, true);
             }
         }

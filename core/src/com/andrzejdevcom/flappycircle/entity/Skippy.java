@@ -1,5 +1,6 @@
-package com.andrzejdevcom.flapcircle.entity;
+package com.andrzejdevcom.flappycircle.entity;
 
+import com.andrzejdevcom.flappycircle.config.GameConfig;
 import com.badlogic.gdx.math.Circle;
 
 public class Skippy {
@@ -10,7 +11,7 @@ public class Skippy {
     private float ySpeed;
 
     public Skippy() {
-        collistionCircle = new Circle(x, y, com.andrzejdevcom.flapcircle.config.GameConfig.SKIPPY_HALF_SIZE);
+        collistionCircle = new Circle(x, y, GameConfig.SKIPPY_HALF_SIZE);
     }
 
     public Circle getCollistionCircle() {
@@ -19,7 +20,7 @@ public class Skippy {
 
 
     public void update(float dt) {
-        ySpeed -= com.andrzejdevcom.flapcircle.config.GameConfig.DIVE_ACC * dt;
+        ySpeed -= GameConfig.DIVE_ACC * dt;
         setY(y + ySpeed);
     }
 
@@ -34,7 +35,7 @@ public class Skippy {
     }
 
     public void flyUp() {
-        ySpeed = com.andrzejdevcom.flapcircle.config.GameConfig.FLY_ACC;
+        ySpeed = GameConfig.FLY_ACC;
         setY(y + ySpeed);
     }
 

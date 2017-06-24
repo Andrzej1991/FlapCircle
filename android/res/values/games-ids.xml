@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="app_id">90026741351</string>
+    <string name="package_name">com.andrzejdevcom.flappycircle</string>
+    <string name="achievement_first_login">CgkI55yMsM8CEAIQAg</string>
+    <string name="achievement_check_informations">CgkI55yMsM8CEAIQAw</string>
+    <string name="achievement_rate_a_game">CgkI55yMsM8CEAIQBA</string>
+    <string name="achievement_get_10_points">CgkI55yMsM8CEAIQBQ</string>
+    <string name="achievement_get_20_points">CgkI55yMsM8CEAIQBg</string>
+    <string name="achievement_get_50_points">CgkI55yMsM8CEAIQBw</string>
+    <string name="achievement_get_100_points">CgkI55yMsM8CEAIQCA</string>
+    <string name="achievement_get_300_points">CgkI55yMsM8CEAIQCQ</string>
+    <string name="leaderboard_for_july">CgkI55yMsM8CEAIQAQ</string>
+</resources>

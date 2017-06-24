@@ -1,4 +1,4 @@
-package com.andrzejdevcom.flapcircle;
+package com.andrzejdevcom.flappycircle;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,7 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.andrzejdevcom.flapcircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.interfaces.PlayServices;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdListener;
@@ -37,7 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.badlogic.gdx.Gdx.app;
 
-public class AndroidLauncher extends AndroidApplication implements com.andrzejdevcom.flapcircle.interfaces.PlayServices, AdHandler {
+public class AndroidLauncher extends AndroidApplication implements PlayServices, AdHandler {
 
     private static final String AD_UNIT_ID = "ca-app-pub-2389435775598003/5244502571";
     private static final int SHOW_ADS = 1;
@@ -74,7 +75,6 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
         super.onCreate(savedInstanceState);
         adView = new AdView(this);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        cfg.useAccelerometer = true;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("message");
         textView = new TextView(this);
@@ -117,17 +117,18 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
         textParams.setMargins(0, 170, 100, 0);
         relativeLayout.addView(textView, textParams);
         adView.loadAd(builder.build());
-
         setContentView(relativeLayout);
         gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
         gameHelper.enableDebugLog(false);
         GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
             @Override
             public void onSignInFailed() {
+
             }
 
             @Override
             public void onSignInSucceeded() {
+
             }
         };
         gameHelper.setup(gameHelperListener);
@@ -202,11 +203,11 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
 
     @Override
     public void rateGame() {
-        String str = "https://play.google.com/store/apps/details?id=com.andrzejdevcom.flapcircle";
+        String str = "https://play.google.com/store/apps/details?id=com.andrzejdevcom.flappycircle";
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
-        if(isSignedIn()){
+        if (isSignedIn()) {
             Games.Achievements.unlock(gameHelper.getApiClient(),
-                    getString(R.string.achievement_rate_me));
+                    getString(R.string.achievement_rate_a_game));
         }
     }
 
@@ -219,13 +220,13 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
         if (isSignedIn()) {
             if (Integer.parseInt(scoreController.getHighScoreString()) >= 10) {
                 Games.Achievements.unlock(gameHelper.getApiClient(),
-                        getString(R.string.achievement_10_points));
+                        getString(R.string.achievement_get_10_points));
             }
         }
         if (isSignedIn()) {
             if (Integer.parseInt(scoreController.getHighScoreString()) >= 20) {
                 Games.Achievements.unlock(gameHelper.getApiClient(),
-                        getString(R.string.achievement_20_points));
+                        getString(R.string.achievement_get_20_points));
             }
         }
 
@@ -255,7 +256,7 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
     public void submitScore(int highScore) {
         if (isSignedIn()) {
             Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_july_ranking), highScore);
+                    getString(R.string.leaderboard_for_july), highScore);
         }
     }
 
@@ -273,7 +274,7 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
     public void showScore() {
         if (isSignedIn()) {
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_july_ranking)), requestCode);
+                    getString(R.string.leaderboard_for_july)), requestCode);
         } else {
             signIn();
         }
@@ -308,7 +309,8 @@ public class AndroidLauncher extends AndroidApplication implements com.andrzejde
     public void shareGame() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Wow. I'm playing FlapCircle,\n will you bear me?");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Wow. I'm playing Flappy Circle,\n will you beat me?" +
+                " Enjoy\n https://play.google.com/store/apps/details?id=com.andrzejdevcom.flappycircle");
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }

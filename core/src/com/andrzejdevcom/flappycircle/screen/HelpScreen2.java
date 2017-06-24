@@ -1,8 +1,8 @@
-package com.andrzejdevcom.flapcircle.screen;
+package com.andrzejdevcom.flappycircle.screen;
 
-import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
-import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
-import com.andrzejdevcom.flapcircle.config.GameConfig;
+import com.andrzejdevcom.flappycircle.SkippyFlowersGame;
+import com.andrzejdevcom.flappycircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flappycircle.config.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-class HelpScreen1 implements Screen {
+class HelpScreen2 implements Screen {
 
     private SkippyFlowersGame game;
     private Viewport viewport;
@@ -23,12 +23,11 @@ class HelpScreen1 implements Screen {
     private AssetManager assetManager;
     private Stage stage;
 
-    HelpScreen1(SkippyFlowersGame game) {
+    HelpScreen2(SkippyFlowersGame game) {
         this.game = game;
-        texture = new Texture("help1.png");
+        texture = new Texture("help2.png");
         assetManager = game.getAssetManager();
         game.playServices.hideText();
-        game.playServices.unlockInfoAchievement();
     }
 
     private void initUi() {
@@ -62,7 +61,7 @@ class HelpScreen1 implements Screen {
         stage.act();
         stage.draw();
         if (Gdx.input.justTouched()) {
-            game.setScreen(new HelpScreen2(game));
+            game.setScreen(new StartScreen(game));
         }
     }
 

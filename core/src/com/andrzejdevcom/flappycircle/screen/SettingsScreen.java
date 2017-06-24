@@ -1,5 +1,7 @@
-package com.andrzejdevcom.flapcircle.screen;
+package com.andrzejdevcom.flappycircle.screen;
 
+import com.andrzejdevcom.flappycircle.SkippyFlowersGame;
+import com.andrzejdevcom.flappycircle.config.GameConfig;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -9,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,27 +22,23 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
 
     private static final String MUSIC_KEY = "musicSettings";
     private final Preferences prefs;
-    private boolean music_prefs;
 
     private Viewport viewport;
     private Stage stage;
-    public static com.andrzejdevcom.flapcircle.SkippyFlowersGame game;
-    private ImageButton play, leaderBoard, achievementBoard, info, settings, share, rate;
-    private boolean soundFlag = true;
+    public static SkippyFlowersGame game;
 
     private TextButton musicOptions;
     private TextButton soundOption;
-    private TextButton muteAllOption;
     private TextButton exitOption;
 
-    SettingsScreen(com.andrzejdevcom.flapcircle.SkippyFlowersGame game) {
+    SettingsScreen(SkippyFlowersGame game) {
         this.game = game;
-        prefs = Gdx.app.getPreferences(com.andrzejdevcom.flapcircle.SkippyFlowersGame.class.getSimpleName());
+        prefs = Gdx.app.getPreferences(SkippyFlowersGame.class.getSimpleName());
     }
 
     @Override
     public void show() {
-        viewport = new FitViewport(com.andrzejdevcom.flapcircle.config.GameConfig.HUD_WIDTH, com.andrzejdevcom.flapcircle.config.GameConfig.HUD_HEIGHT);
+        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         stage = new Stage(viewport, game.getBatch());
         initUI();
         Gdx.input.setInputProcessor(stage);
@@ -60,6 +57,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         textButtonStyle.font = font;
         textButtonStyle.up = skin.getDrawable("button_04");
         musicOptions = new TextButton("MUSIC ON", textButtonStyle);
+        musicOptions.getLabel().setFontScale(2.0f, 2.0f);
         musicOptions.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -78,6 +76,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
             }
         });
         soundOption = new TextButton("SOUND ON", textButtonStyle);
+        soundOption.getLabel().setFontScale(2.0f, 2.0f);
         soundOption.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -87,7 +86,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         });
 
         exitOption = new TextButton("EXIT", textButtonStyle);
-        exitOption.setSize(3f, 3f);
+        exitOption.getLabel().setFontScale(2.0f, 2.0f);
         exitOption.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -95,11 +94,11 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
                 game.setScreen(new StartScreen(game));
             }
         });
-        table.add(musicOptions).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
+        table.add(musicOptions).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
         table.row();
-        table.add(soundOption).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
+        table.add(soundOption).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
         table.row();
-        table.add(exitOption).minWidth(com.andrzejdevcom.flapcircle.config.GameConfig.WIDTH / 2f).minHeight(com.andrzejdevcom.flapcircle.config.GameConfig.HEIGHT / 6);
+        table.add(exitOption).minWidth(GameConfig.WIDTH / 2f).minHeight(GameConfig.HEIGHT / 6);
         table.row();
         stage.addActor(table);
     }

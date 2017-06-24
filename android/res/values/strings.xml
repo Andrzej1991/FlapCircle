@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FlapCircle</string>
+    <string name="app_name">Flappy Circle</string>
     <string name="exit">Exit</string>
     <string name="curretly_prize_pool">Currently prize pool: </string>
 

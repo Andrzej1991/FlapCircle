@@ -1,5 +1,6 @@
-package com.andrzejdevcom.flapcircle.entity;
+package com.andrzejdevcom.flappycircle.entity;
 
+import com.andrzejdevcom.flappycircle.config.GameConfig;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
@@ -46,7 +47,7 @@ public class Flower {
         topCollistionCircle = new Circle(x + COLLISION_RECT_HALF_WIDTH, topY,
                 COLLLISTION_CIRCLER_RADIUS);
         sensorRectangle = new Rectangle(x + COLLISION_RECT_HALF_WIDTH, 0, SENSOR_RECT_WIDTH,
-                com.andrzejdevcom.flapcircle.config.GameConfig.WORLD_HEIGHT);
+                GameConfig.WORLD_HEIGHT);
     }
 
     public void update(float dt) {

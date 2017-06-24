@@ -1,5 +1,6 @@
-package com.andrzejdevcom.flapcircle.common;
+package com.andrzejdevcom.flappycircle.common;
 
+import com.andrzejdevcom.flappycircle.SkippyFlowersGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
@@ -12,7 +13,7 @@ public class ScoreController {
     private int highScore;
 
     public ScoreController(){
-        prefs = Gdx.app.getPreferences(com.andrzejdevcom.flapcircle.SkippyFlowersGame.class.getSimpleName());
+        prefs = Gdx.app.getPreferences(SkippyFlowersGame.class.getSimpleName());
         highScore = prefs.getInteger(HIGHT_SCORE_KEY, 0);
     }
 
@@ -22,10 +23,6 @@ public class ScoreController {
 
     public String getScoreString(){
         return Integer.toString(score);
-    }
-
-    public int getScore() {
-        return score;
     }
 
     public String getHighScoreString(){

@@ -1,10 +1,10 @@
-package com.andrzejdevcom.flapcircle.screen;
+package com.andrzejdevcom.flappycircle.screen;
 
-import com.andrzejdevcom.flapcircle.SkippyFlowersGame;
-import com.andrzejdevcom.flapcircle.assets.AssetDescriptors;
-import com.andrzejdevcom.flapcircle.assets.RegionNames;
-import com.andrzejdevcom.flapcircle.common.ScoreController;
-import com.andrzejdevcom.flapcircle.config.GameConfig;
+import com.andrzejdevcom.flappycircle.SkippyFlowersGame;
+import com.andrzejdevcom.flappycircle.assets.AssetDescriptors;
+import com.andrzejdevcom.flappycircle.assets.RegionNames;
+import com.andrzejdevcom.flappycircle.common.ScoreController;
+import com.andrzejdevcom.flappycircle.config.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -78,7 +78,6 @@ public class StartScreen implements Screen {
                 game.playServices.showAchievement();
             }
         });
-
         TextureRegion infoRegion = atlas.findRegion(RegionNames.INFO);
         info = new ImageButton(new TextureRegionDrawable(infoRegion));
         info.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEIGHT / 2f, Align.center);
@@ -88,17 +87,15 @@ public class StartScreen implements Screen {
                 game.setScreen(new HelpScreen1(game));
             }
         });
-
         TextureRegion settingsRegion = atlas.findRegion(RegionNames.SETTINGS);
         settings = new ImageButton(new TextureRegionDrawable(settingsRegion));
         settings.setPosition(GameConfig.HUD_WIDTH / 2f, GameConfig.HUD_HEIGHT / 12f, Align.center);
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game));
+                game.setScreen(new com.andrzejdevcom.flappycircle.screen.SettingsScreen(game));
             }
         });
-
         TextureRegion shareRegion = atlas.findRegion(RegionNames.SHARE);
         share = new ImageButton(new TextureRegionDrawable(shareRegion));
         share.setPosition((GameConfig.HUD_WIDTH / 2f) + (GameConfig.HUD_WIDTH / 4f), GameConfig.HUD_HEIGHT / 4.7f, Align.center);

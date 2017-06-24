@@ -1,4 +1,4 @@
-package com.andrzejdevcom.flapcircle.config;
+package com.andrzejdevcom.flappycircle.config;
 
 import com.badlogic.gdx.Gdx;
 
